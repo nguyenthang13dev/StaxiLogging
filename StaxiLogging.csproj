@@ -5,10 +5,19 @@
 
 	  <!-- BẮT BUỘC: Thông tin package -->
 	  <PackageId>Staxi.Log</PackageId>
-	  <Version>1.0.0</Version>
-	  <Authors>Staxi</Authors>
-	  <Description>Log system to ES</Description>
-
+	  <Version>1.0.4</Version>
+	  <Authors>Nguyenthang13dev</Authors>
+	  <Company>BAGPS</Company>
+	  <Product>Staxi Logging Library</Product>
+	  <Description>Thư viện logging tích hợp Elasticsearch cho .NET, hỗ trợ Serilog, NLog và log4net. Hỗ trợ chia log theo ngày.</Description>
+	  <PackageDescription>
+		  StaxiLogging là thư viện logging mạnh mẽ cho ứng dụng .NET, cung cấp:
+		  - Tích hợp Elasticsearch với Serilog
+		  - Hỗ trợ chuyển đổi từ NLog và log4net
+		  - Chia log theo ngày tự động
+		  - Cấu hình đơn giản, dễ sử dụng
+	  </PackageDescription>
+	  <IsTrimmable>false</IsTrimmable>
 	  <!-- QUAN TRỌNG: Để tự động tạo package khi build -->
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
@@ -16,14 +25,16 @@
 	  <Company>STaxi</Company>
 	  <PackageTags>utilities tools</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <RepositoryUrl>https://github.com/yourusername/repo.git</RepositoryUrl>
+	  <RepositoryUrl>https://github.com/nguyenthang13dev/StaxiLogging.git</RepositoryUrl>
 
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="3.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+    <PackageReference Include="NLog" Version="6.0.7" />
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />

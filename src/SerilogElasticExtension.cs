@@ -2,17 +2,21 @@
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Elasticsearch;
+using Serilog.Sinks.File;
+using StaxiLogging.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Serilog.Sinks.File;
+using StaxiLogging;
+
 namespace StaxiLogging.src
 {
     public static class SerilogElasticExtension
     {
         public static LoggerConfiguration UseElasticLoggingConfig(this LoggerConfiguration logger, ElasticLoggingOption options)
         {
+
             return logger
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -27,7 +31,7 @@ namespace StaxiLogging.src
                   .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(options.Uri))
                   {
                       AutoRegisterTemplate = options.AutoRegisterTemplate,
-                      IndexFormat = options.IndexFormat,
+                      IndexFormat = options.IndexFormat,    
                       NumberOfReplicas = options.NumberOfReplicas,
                       NumberOfShards = options.NumberOfShards,
                       AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
@@ -48,6 +52,21 @@ namespace StaxiLogging.src
                         null
                         )
                   });
+        }
+
+        public static void RedirectLog4Net(this Serilog.ILogger logger)
+        {
+            var repo = log4net.LogManager.GetRepository();
+            var appender = new SerilogLog4NetAppender(logger);
+            log4net.Config.BasicConfigurator.Configure(appender);
+        }
+
+        public static void RedirectNLog(this Serilog.ILogger logger)
+        {
+            var config = NLog.LogManager.Configuration ?? new NLog.Config.LoggingConfiguration();
+            var target = new SerilogNLogTarget(logger);
+            config.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, target);
+            NLog.LogManager.Configuration = config;
         }
 
     }
