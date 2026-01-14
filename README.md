@@ -122,3 +122,51 @@ dotnet add package Staxi.Log
 Rollover: 1 ngày HOẶC 5GB
 Delete: sau 7 ngày
 
+1. Tạo ILM Policy với index pattern:
+```bash
+PUT _ilm/policy/applogs-minute-policy
+{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms",
+        "actions": {
+          "rollover": {
+            "max_age": "1m"
+          }
+        }
+      },
+      "delete": {
+        "min_age": "2m",  // Xóa sau 2 phút
+        "actions": {
+          "delete": {}
+        }
+      }
+    }
+  }
+}
+```
+2. Tạo Component Template để tự động gắn ILM:
+```bash
+PUT _component_template/applogs-ilm-settings
+{
+  "template": {
+    "settings": {
+      "index.lifecycle.name": "applogs-minute-policy"
+    }
+  }
+}
+
+PUT _index_template/applogs-minute-template
+{
+  "index_patterns": ["applogs-*"],
+  "composed_of": ["applogs-ilm-settings"],  // Tự động áp dụng ILM
+  "priority": 100,
+  "template": {
+    "settings": {
+      "index.number_of_shards": 1,
+      "index.number_of_replicas": 1
+    }
+  }
+}
+```

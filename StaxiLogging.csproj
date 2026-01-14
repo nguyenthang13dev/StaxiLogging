@@ -5,7 +5,7 @@
 
 	  <!-- BẮT BUỘC: Thông tin package -->
 	  <PackageId>Staxi.Log</PackageId>
-	  <Version>1.0.4</Version>
+	  <Version>1.0.5</Version>
 	  <Authors>Nguyenthang13dev</Authors>
 	  <Company>BAGPS</Company>
 	  <Product>Staxi Logging Library</Product>
