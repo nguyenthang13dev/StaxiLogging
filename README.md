@@ -1,15 +1,15 @@
-# Staxi.Log
+﻿# Staxi.Log
 
-`Staxi.Log` l� th? vi?n logging s? d?ng **Serilog** k?t h?p **Elasticsearch** ?? qu?n l� log cho c�c ?ng d?ng .NET Core / .NET 6+ / .NET Frame. Th? vi?n h? tr?:
+`Staxi.Log` là thư viện logging sử dụng **Serilog** kết hợp **Elasticsearch** để quản lý log cho các ứng dụng .NET Core / .NET 6+ / .NET Frame. Thư viện hỗ trợ:
 
-- Ghi log v�o Elasticsearch.
-- H? tr? rolling index d?a tr�n **alias + ILM policy**.
-- T? ??ng fallback log khi Elasticsearch offline.
-- T�y ch?n m?c log (`Information`, `Warning`, `Error`, ...).
+- Ghi log vào Elasticsearch.
+- Hỗ trợ rolling index dựa trên **alias + ILM policy**.
+- Tự động fallback log khi Elasticsearch offline.
+- Tùy chọn mức log (`Information`, `Warning`, `Error`, ...).
 
 ---
-### I. C�i m�i tr??ng
-- T?o docker-compose.yml n?u ch?a c� elasticsearch,kibana
+### I. Cài môi trường
+- Tạo docker-compose.yml nếu chưa có elasticsearch,kibana
 ```bash
 
 services:
@@ -59,34 +59,34 @@ Run docker-compose
 docker-compose up -d
 ```
 
-### 1. C�i ??t d? �n
+### 1. Cài đặt dự án
 
-Th�m package NuGet:
+Thêm package NuGet:
 ```bash
 dotnet add package Staxi.Log
 ```
-### 2. C?u h�nh elastic
+### 2. Cấu hình elastic
 ```bash
         using StaxiLogging.src;
  
          var options = new ElasticLoggingOption
          {
              Uri = "http://localhost:9200",  // Uri
-             IndexFormat = "winforms-app-{0:yyyy.MM.dd}", // Index format config theo ng�y ng�y
-             ApplicationName = "WinFormsApp1", // T�n ?ng d?ng
-             EnvironmentName = "Dev", // M�i tr??ng
-             AutoRegisterTemplate = true, // T? ??ng ??ng k� index template
-             NumberOfReplicas = 1, // S? l??ng replicas cho index
+             IndexFormat = "winforms-app-{0:yyyy.MM.dd}", // Index format config theo ngày ngày
+             ApplicationName = "WinFormsApp1", // Tên ứng dựng
+             EnvironmentName = "Dev", // Môi trường
+             AutoRegisterTemplate = true, // Tự động đăng ký index template
+             NumberOfReplicas = 1, // Số lượng replicas cho index
              NumberOfShards = 1, 
-             MiniLogLevel = LogEventLevel.Debug, // Log t? level
+             MiniLogLevel = LogEventLevel.Debug, // Log từ level
              BatchPostingLimit = 50, 
-             PathFileSinkFail = "Logs/serilog-elastic-failures.txt", // ES ch?t s? ??y log v�o file
-             User = "elastic",       // n?u c?n auth
-             Password = "staxicommon123!@#"    // n?u c?n auth
+             PathFileSinkFail = "Logs/serilog-elastic-failures.txt", // ES chết sẽ đẩy log vào file
+             User = "elastic",       // nếu cần auth
+             Password = "staxicommon123!@#"    // nếu cần auth
          };
 ```
-### 2. C?u h�nh Serilog trong ?ng d?ng
-- V?i serilog
+### 2. Cấu hình Serilog trong ứng dụng
+- Với serilog
 ```bash
   Log.Logger = new LoggerConfiguration(options)
                   .UseElasticLoggingConfig)
@@ -95,7 +95,7 @@ dotnet add package Staxi.Log
   builder.Host.UseSerilog();
 ```
 
-- log4net (d? �n ?ang d�ng s? redirect lu?ng ghi v� serilog)
+- log4net (dự án đang dùng sẽ redirect luồng ghi và serilog)
 ```bash
             var loggerConfig = new LoggerConfiguration()
                                     .MinimumLevel.Debug()
@@ -113,6 +113,6 @@ dotnet add package Staxi.Log
                                                 .CreateLogger();
             Log.Logger.RedirectNLog();
 ```
-### 3, Ki?m tra , truy v?n log
-- V?i dev env xem log tr�n localhost:9200 (ES)
-- Xem data, query , t?o b�o c�o tr�n kibana  localhost:5601 (Kibana)
+### 3, Kiểm tra , truy vấn log
+- Với dev env xem log trên localhost:9200 (ES)
+- Xem data, query , tạo báo cáo trên kibana  localhost:5601 (Kibana)
