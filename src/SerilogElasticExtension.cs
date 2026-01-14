@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using StaxiLogging;
+using Serilog.Formatting.Elasticsearch;
 
 namespace StaxiLogging.src
 {
@@ -34,7 +35,7 @@ namespace StaxiLogging.src
                       IndexFormat = options.IndexFormat,    
                       NumberOfReplicas = options.NumberOfReplicas,
                       NumberOfShards = options.NumberOfShards,
-                      AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
+                      AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
                       MinimumLogEventLevel = options.MiniLogLevel,
                       BatchPostingLimit = options.BatchPostingLimit,
 
@@ -42,6 +43,14 @@ namespace StaxiLogging.src
                         conn.BasicAuthentication(options.User,
                          options.Password
                         ),
+
+                      TypeName = options.TypeName,
+
+                      // Tạo với ILM
+                      CustomFormatter = new ElasticsearchJsonFormatter(
+                        renderMessage: options.RenderMessage,
+                        inlineFields: options.InlineFields
+                      ),
 
                       EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
                        EmitEventFailureHandling.WriteToFailureSink,

@@ -23,6 +23,11 @@ namespace StaxiLogging.src
         public int NumberOfShards { get; set; } = 1;
         public int BatchPostingLimit { get; set; }
 
+        public string TypeName { get; set; } = "doc";
+
+        public bool RenderMessage { get; set; } = true;
+        public bool InlineFields { get; set; } = true;
+
 
     }
 

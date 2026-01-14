@@ -116,3 +116,9 @@ dotnet add package Staxi.Log
 ### 3, Kiểm tra , truy vấn log
 - Với dev env xem log trên localhost:9200 (ES)
 - Xem data, query , tạo báo cáo trên kibana  localhost:5601 (Kibana)
+
+### 4. Tạo ILM (Index log) để xóa index theo ngày tháng
+    - Ví dụ:
+Rollover: 1 ngày HOẶC 5GB
+Delete: sau 7 ngày
+
