@@ -2,12 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	  <LangVersion>latest</LangVersion>
 
 	  <!-- BẮT BUỘC: Thông tin package -->
 	  <PackageId>Staxi.Log</PackageId>
-	  <Version>1.0.6</Version>
+	  <Version>1.1.6</Version>
+	  <AssemblyVersion>1.1.6</AssemblyVersion>
+	  <FileVersion>1.1.6</FileVersion>
+	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <IncludeSymbols>true</IncludeSymbols>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <Authors>Nguyenthang13dev</Authors>
-	  <Company>BAGPS</Company>
 	  <Product>Staxi Logging Library</Product>
 	  <Description>Thư viện logging tích hợp Elasticsearch cho .NET, hỗ trợ Serilog, NLog và log4net. Hỗ trợ chia log theo ngày.</Description>
 	  <PackageDescription>
@@ -18,9 +24,6 @@
 		  - Cấu hình đơn giản, dễ sử dụng
 	  </PackageDescription>
 	  <IsTrimmable>false</IsTrimmable>
-	  <!-- QUAN TRỌNG: Để tự động tạo package khi build -->
-	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-
 	  <!-- Tùy chọn nhưng nên có -->
 	  <Company>STaxi</Company>
 	  <PackageTags>utilities tools</PackageTags>
@@ -34,6 +37,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
+    <PackageReference Include="NEST" Version="7.17.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="NLog" Version="6.0.7" />
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />

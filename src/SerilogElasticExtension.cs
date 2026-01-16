@@ -1,15 +1,17 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Nest;
 using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Elasticsearch;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.File;
+using StaxiLogging;
+using StaxiLogging.Services;
 using StaxiLogging.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using StaxiLogging;
-using Serilog.Formatting.Elasticsearch;
 
 namespace StaxiLogging.src
 {
@@ -63,13 +65,33 @@ namespace StaxiLogging.src
                   });
         }
 
+        public static IServiceCollection AddStaxiLogRead(this IServiceCollection services, ElasticLoggingOption options)
+        {
+
+            string indexPattern = System.Text.RegularExpressions.Regex.Replace(options.IndexFormat, @"\{0:.*?\}", "*");
+
+
+            var connection = new ConnectionSettings(new Uri(options.Uri))
+                .BasicAuthentication(options.User, options.Password);
+
+            var client = new ElasticClient(connection);
+
+            services.AddSingleton<IElasticClient>(client);
+
+            services.AddScoped<IStaxiLogReader>(sp =>
+            {
+                return new StaxiLogReader(client, indexPattern);
+            });
+
+            return services;
+        }
+
         public static void RedirectLog4Net(this Serilog.ILogger logger)
         {
             var repo = log4net.LogManager.GetRepository();
             var appender = new SerilogLog4NetAppender(logger);
             log4net.Config.BasicConfigurator.Configure(appender);
         }
-
         public static void RedirectNLog(this Serilog.ILogger logger)
         {
             var config = NLog.LogManager.Configuration ?? new NLog.Config.LoggingConfiguration();
