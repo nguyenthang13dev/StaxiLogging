@@ -16,14 +16,10 @@ namespace StaxiLogging.Services
         private readonly IElasticClient _client;
 
         private readonly string _defaultIndexName;
-
-
         public StaxiLogReader(IElasticClient client, string indexName) { 
             _client = client;
             _defaultIndexName = indexName;
         }
-
-
         public async Task<BaseResponse<StaxiLogEntry>> GetPageListLogService(LogSearchOptions filter, string indexName = null)
         {
 
@@ -47,11 +43,20 @@ namespace StaxiLogging.Services
                     .Query(q => q
                         .Bool(b => b
                             .Filter(
-                                f => f.DateRange(r => r
-                                        .Field(p => p.Timestamp)
-                                        .GreaterThanOrEquals(filter.From)
-                                        .LessThanOrEquals(filter.To)
-                                ),
+                                // filter theo level
+                                f =>  filter.From.HasValue ? f.DateRange(r => r
+                                                                             .Field(p => p.Timestamp)
+                                                                             .GreaterThanOrEquals(filter.From.Value)) : null,
+
+                                // filter theo level
+                                f => filter.To.HasValue ? f.DateRange(r => r
+                                                                             .Field(p => p.Timestamp)
+                                                                             .LessThanOrEquals(filter.To.Value)) : null,
+
+                                f => !string.IsNullOrEmpty(filter.Loglevel) ? f.Match(m => m
+                                                                        .Field(p => p.Level)
+                                                                        .Query(filter.Loglevel)
+                                                                        ) : null,
 
                                 // filter theop application
                                 f => !string.IsNullOrEmpty(filter.Application) ? f.Term(t => t

@@ -6,9 +6,9 @@
 
 	  <!-- BẮT BUỘC: Thông tin package -->
 	  <PackageId>Staxi.Log</PackageId>
-	  <Version>1.1.6</Version>
-	  <AssemblyVersion>1.1.6</AssemblyVersion>
-	  <FileVersion>1.1.6</FileVersion>
+	  <Version>1.2.0</Version>
+	  <AssemblyVersion>1.2.0</AssemblyVersion>
+	  <FileVersion>1.2.0</FileVersion>
 	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <IncludeSymbols>true</IncludeSymbols>

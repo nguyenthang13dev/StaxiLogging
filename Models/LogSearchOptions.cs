@@ -6,8 +6,12 @@ namespace StaxiLogging.Models
 {
     public class LogSearchOptions
     {
-
-
+        /// <summary>
+        /// 1. Information
+        /// 2. Error
+        /// 3. Warning
+        /// </summary>
+        public string Loglevel { get; set; } 
         public string SearchTerm { get; set; } = string.Empty;
         public string Application { get; set; } = string.Empty;
         public string RequestApi { get; set; }
