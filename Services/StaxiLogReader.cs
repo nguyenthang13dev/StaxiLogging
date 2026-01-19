@@ -57,7 +57,10 @@ namespace StaxiLogging.Services
                                                                         .Field(p => p.Level)
                                                                         .Query(filter.Loglevel)
                                                                         ) : null,
-
+                                // filter theop application
+                                f => !string.IsNullOrEmpty(filter.Environment) ? f.Term(t => t
+                                                                                            .Field("Environment.keyword")
+                                                                                        .Value(filter.Environment)) : null,
                                 // filter theop application
                                 f => !string.IsNullOrEmpty(filter.Application) ? f.Term(t => t
                                                                                             .Field("Application.keyword")

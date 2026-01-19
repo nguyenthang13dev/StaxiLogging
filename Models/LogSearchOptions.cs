@@ -15,6 +15,7 @@ namespace StaxiLogging.Models
         public string SearchTerm { get; set; } = string.Empty;
         public string Application { get; set; } = string.Empty;
         public string RequestApi { get; set; }
+        public string Environment { get; set; } = string.Empty;
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
         public int PageSize { get; set; } = 20;

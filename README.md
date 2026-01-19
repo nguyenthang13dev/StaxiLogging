@@ -1,6 +1,6 @@
-﻿# Staxi.Log
+﻿# TMSLog
 
-`Staxi.Log` là thư viện logging sử dụng **Serilog** kết hợp **Elasticsearch** để quản lý log cho các ứng dụng .NET Core / .NET 6+ / .NET Frame. Thư viện hỗ trợ:
+`TMSLog` là thư viện logging sử dụng **Serilog** kết hợp **Elasticsearch** để quản lý log cho các ứng dụng .NET Core / .NET 6+ / .NET Frame. Thư viện hỗ trợ:
 
 - Ghi log vào Elasticsearch.
 - Hỗ trợ rolling index dựa trên **alias + ILM policy**.

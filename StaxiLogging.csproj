@@ -5,16 +5,16 @@
 	  <LangVersion>latest</LangVersion>
 
 	  <!-- BẮT BUỘC: Thông tin package -->
-	  <PackageId>Staxi.Log</PackageId>
-	  <Version>1.2.0</Version>
-	  <AssemblyVersion>1.2.0</AssemblyVersion>
-	  <FileVersion>1.2.0</FileVersion>
+	  <PackageId>TMSLog</PackageId>
+	  <Version>1.2.1</Version>
+	  <AssemblyVersion>1.2.1</AssemblyVersion>
+	  <FileVersion>1.2.1</FileVersion>
 	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <IncludeSymbols>true</IncludeSymbols>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	  <Authors>Nguyenthang13dev</Authors>
-	  <Product>Staxi Logging Library</Product>
+	  <Product>TMSLog Library</Product>
 	  <Description>Thư viện logging tích hợp Elasticsearch cho .NET, hỗ trợ Serilog, NLog và log4net. Hỗ trợ chia log theo ngày.</Description>
 	  <PackageDescription>
 		  StaxiLogging là thư viện logging mạnh mẽ cho ứng dụng .NET, cung cấp:
