@@ -7,7 +7,6 @@ namespace StaxiLogging.src
 {
     public class ElasticLoggingOption
     {
-
         // Test verrsion
         public string Uri { get; set; } = "http://localhost:9200";
         public string User { get; set; } = string.Empty;
@@ -25,7 +24,6 @@ namespace StaxiLogging.src
         public string TypeName { get; set; } = "_doc";
         public bool RenderMessage { get; set; } = true;
         public bool InlineFields { get; set; } = true;
-
     }
 
 }

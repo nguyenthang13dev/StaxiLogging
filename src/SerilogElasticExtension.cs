@@ -30,7 +30,10 @@ namespace StaxiLogging.src
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Application", options.ApplicationName)
                 .Enrich.WithProperty("Environment", options.EnvironmentName)
-
+                .Enrich.WithProperty("Hostname", Environment.MachineName)
+                .Enrich.WithProperty("Containername", Environment.GetEnvironmentVariable("HOSTNAME"))
+                .Enrich.WithProperty("Pod", Environment.GetEnvironmentVariable("POD_NAME"))
+                .Enrich.WithProperty("Node", Environment.GetEnvironmentVariable("NODE_NAME"))
                   .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(options.Uri))
                   {
                       AutoRegisterTemplate = options.AutoRegisterTemplate,
