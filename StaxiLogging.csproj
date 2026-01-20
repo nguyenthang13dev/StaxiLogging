@@ -6,9 +6,9 @@
 
 	  <!-- BẮT BUỘC: Thông tin package -->
 	  <PackageId>TMSLog</PackageId>
-	  <Version>1.2.1</Version>
-	  <AssemblyVersion>1.2.1</AssemblyVersion>
-	  <FileVersion>1.2.1</FileVersion>
+	  <Version>1.2.2</Version>
+	  <AssemblyVersion>1.2.2</AssemblyVersion>
+	  <FileVersion>1.2.2</FileVersion>
 	  <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <IncludeSymbols>true</IncludeSymbols>
