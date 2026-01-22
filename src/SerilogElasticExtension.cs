@@ -28,10 +28,9 @@ namespace StaxiLogging.src
             {
                 Directory.CreateDirectory(logDirectory);
             }
-
             var failureLogger = new LoggerConfiguration()
                     .WriteTo.File(
-                        path: options.PathFileSinkFail, 
+                        path: fullPath, 
                         rollingInterval: RollingInterval.Day, 
                         retainedFileCountLimit: 31,
                         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
