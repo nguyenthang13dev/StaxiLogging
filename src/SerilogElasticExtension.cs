@@ -10,6 +10,7 @@ using StaxiLogging.Services;
 using StaxiLogging.Wrappers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 
@@ -19,6 +20,23 @@ namespace StaxiLogging.src
     {
         public static LoggerConfiguration UseElasticLoggingConfig(this LoggerConfiguration logger, ElasticLoggingOption options)
         {
+            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            var fullPath = Path.Combine(baseDir, options.PathFileSinkFail);
+            // Đảm bảo thư mục Logs tồn tại, nếu không có IIS sẽ không tự tạo và gây lỗi
+            var logDirectory = Path.GetDirectoryName(fullPath);
+            if (!string.IsNullOrEmpty(logDirectory) && !Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+
+            var failureLogger = new LoggerConfiguration()
+                    .WriteTo.File(
+                        path: options.PathFileSinkFail, 
+                        rollingInterval: RollingInterval.Day, 
+                        retainedFileCountLimit: 31,
+                        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"
+                    )
+                    .CreateLogger();
 
             return logger
                 .MinimumLevel.Debug()
@@ -56,15 +74,8 @@ namespace StaxiLogging.src
                         renderMessage: options.RenderMessage,
                         inlineFields: options.InlineFields
                       ),
-
-                      EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog |
-                       EmitEventFailureHandling.WriteToFailureSink,
-
-                      FailureSink = new FileSink(
-                        options.PathFileSinkFail,
-                        new Serilog.Formatting.Json.JsonFormatter(),
-                        null
-                        )
+                      EmitEventFailure = EmitEventFailureHandling.WriteToFailureSink,
+                      FailureSink = failureLogger
                   });
         }
 
